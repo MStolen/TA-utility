@@ -2,23 +2,62 @@
 import pathlib
 import warnings
 import pandas as pd
+import math
 
 
-def fix_column_width(writer: pd.ExcelWriter, sheet_name: str, df: pd.DataFrame) -> None:
+def fix_column_width(writer: pd.ExcelWriter, sheet_name: str, df: pd.DataFrame, max_last=False) -> None:
     """
 Change The width of all columns in an excel sheet to fit the text contained inside.
     :param writer: The excel file writer which has already written the sheet
     :param sheet_name: The name of the sheet to adjust
     :param df: The data frame where sheet was written from
+    :param max_last: Whether or not to maximize last width
     """
+    workbook = writer.book
     worksheet = writer.sheets[sheet_name]  # pull worksheet object
+    total_width = 0
+    max_width = 114.33
+    idx = 0
+    max_len = 0
+    cell_format = workbook.add_format({'border': 1})
     for idx, col in enumerate(df):  # loop through all columns
         series = df[col]
         max_len = max((
             series.astype(str).map(len).max(),  # len of largest item
             len(str(series.name))  # len of column name/header
         )) + 1  # adding a little extra space
-        worksheet.set_column(idx, idx, max_len)  # set column width
+        worksheet.set_column(idx, idx, max_len, cell_format)  # set column width
+        total_width += max_len
+    if max_last:
+        # set width to all fit on one page. 0.65 * idx is the error per column
+        worksheet.set_column(idx, idx, max_width - (total_width - max_len) - 0.65 * idx, cell_format)
+
+
+def max_row_height(writer: pd.ExcelWriter, sheet_name: str, df: pd.DataFrame) -> None:
+    """
+Make rows as tall as possible while remaining on a single page. Skips first row.
+    :param writer: The excel file writer which has already written the sheet
+    :param sheet_name: The name of the sheet to adjust
+    :param df: The data frame where sheet was written from
+    :return:
+    """
+    worksheet = writer.sheets[sheet_name]
+    total_height = 537
+    num_rows = df.shape[0]
+    row_height = math.floor((total_height - 15)/num_rows)
+    for idx in range(1, num_rows + 1):
+        worksheet.set_row(row=idx, height=row_height)
+
+
+def set_landscape(writer: pd.ExcelWriter, sheet_name: str) -> None:
+    """
+Set a worksheet to landscape
+    :param writer: The excel writer to operate on
+    :param sheet_name: The name of the sheet to adjust
+    :return:
+    """
+    worksheet = writer.sheets[sheet_name]
+    worksheet.set_landscape()
 
 
 def get_sorted_csv_or_xls(folder_location: pathlib.Path,
@@ -89,6 +128,9 @@ Make an Excel file with a single sheet for each section in the list with name co
         for header in column_headers:
             section_data[header] = empty_column
         section_data.to_excel(writer, sheet_name=file.stem, index=False)
+        fix_column_width(writer=writer, sheet_name=file.stem, df=section_data, max_last=True)
+        max_row_height(writer=writer, sheet_name=file.stem, df=section_data)
+        set_landscape(writer=writer, sheet_name=file.stem)
     writer.save()
 
     return 0

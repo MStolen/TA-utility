@@ -22,31 +22,6 @@ Import students names from section and create sign-in sheet
     :param last_name: The last name column header
     :return: 0 for success and other for failure
     """
-    # section_list = get_sorted_csv_or_xls(section_list_location)
-    #
-    # # Check for incorrect output file extension
-    # if sign_in_file.suffix != '.xlsx':
-    #     warnings.warn(
-    #         f"The output extension should be '.xlsx', instead of '{sign_in_file.suffix}'. This may cause an error.")
-    #
-    # # Write all first and last names to a sheet per section (sections are defined by individual input files)
-    # writer = pd.ExcelWriter(sign_in_file)
-    # for file in section_list:
-    #     if file.suffix == '.xls':
-    #         section_data = pd.read_excel(file)
-    #     else:
-    #         section_data = pd.read_csv(file)
-    #     # determine which columns are needed for name and remove the remainder
-    #     columns_keep = (section_data.columns == last_name) | (section_data.columns == first_name)
-    #     section_data.drop(columns=section_data.columns[~columns_keep], inplace=True)
-    #     empty_column = [None] * section_data.shape[0]
-    #     section_data['Time In'] = empty_column
-    #     section_data['Time Out'] = empty_column
-    #     section_data['Signature'] = empty_column
-    #     section_data['Finished'] = empty_column
-    #     section_data.to_excel(writer, sheet_name=file.stem, index=False)
-    # writer.save()
-    # return 0
     return make_name_sheets(section_list_location=section_list_location,
                             output_file=sign_in_file,
                             column_headers=['Time In', 'Time Out', 'Signature', 'Finished'],
@@ -72,32 +47,6 @@ Import students names from section and create checkoff sheet
     :param last_name: The last name column header
     :return: 0 for success and other for failure
     """
-
-    # section_list = get_sorted_csv_or_xls(section_list_location)
-    #
-    # # Check for incorrect output file extension
-    # if checkoff_file.suffix != '.xlsx':
-    #     warnings.warn(
-    #         f"The output extension should be '.xlsx', instead of '{checkoff_file.suffix}'. This may cause an error.")
-    #
-    # # Write all first and last names to a sheet per section (sections are defined by individual input files)
-    # writer = pd.ExcelWriter(checkoff_file)
-    # for file in section_list:
-    #     if file.suffix == '.xls':
-    #         section_data = pd.read_excel(file)
-    #     else:
-    #         section_data = pd.read_csv(file)
-    #     # determine which columns are needed for name and remove the remainder
-    #     columns_keep = (section_data.columns == last_name) | (section_data.columns == first_name)
-    #     section_data.drop(columns=section_data.columns[~columns_keep], inplace=True)
-    #     empty_column = [None] * section_data.shape[0]
-    #     section_data['Four-Bit Counter'] = empty_column
-    #     section_data['Two-Digit Joystick'] = empty_column
-    #     section_data['Grade'] = empty_column
-    #     section_data['Notes'] = empty_column
-    #     section_data.to_excel(writer, sheet_name=file.stem, index=False)
-    # writer.save()
-    # return 0
 
     # Get list of checkoffs to have a column for
     checkoff_table = read_csv_or_xls(checkoff_list_file)
@@ -140,11 +89,6 @@ Write a report to determine which students have not completed an assignment. Thi
     # The class files are the assignment files from grade center
     section_list = get_sorted_csv_or_xls(section_list_location)
     lab_list = get_sorted_csv_or_xls(prelab_location)
-
-    # Check for wrong output extension (unused)
-    # if report_file.suffix != '.xlsx':
-    #     warnings.warn("The output extension should be '.xlsx', instead of '{0}'".format(report_file.suffix))
-    #     return 2
 
     # iterate through each class file
     for class_file in lab_list:

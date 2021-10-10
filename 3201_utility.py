@@ -1,5 +1,5 @@
 """
-v0.1.0
+v0.2.0
 This script has various utilities to automate TA work for 3201.
 
 This file contains only the argument parsing structure, with the main functions located in "libs/main_functions.py" and
@@ -15,6 +15,38 @@ from libs.help_formatter import CustomHelpFormatter
 
 # Main functions
 from libs.main_functions import create_sign_in_sheets, check_pre_labs, make_checkoffs
+
+
+def select_function(input_arguments: argparse.Namespace) -> int:
+    """
+The main function which selects the arguments run
+    :param input_arguments: Arguments parsed in
+    :return: exit code
+    """
+    if input_arguments.subcommand == 'sign-in':
+        return create_sign_in_sheets(section_list_location=input_arguments.section_lists,
+                                     sign_in_file=input_arguments.output_file,
+                                     first_name=input_arguments.first_name,
+                                     last_name=input_arguments.last_name)
+    elif input_arguments.subcommand == 'check-pre-labs':
+        return check_pre_labs(section_list_location=input_arguments.section_lists,
+                              file_suffix=input_arguments.file_suffix,
+                              prelab_location=input_arguments.prelab_location,
+                              output_location=input_arguments.output_location,
+                              assignment_index=7,  # Default position of assignment in eLearning documents
+                              first_name=input_arguments.first_name,
+                              last_name=input_arguments.last_name)
+    elif input_arguments.subcommand == 'make-checkoffs':
+        return make_checkoffs(section_list_location=input_arguments.section_lists,
+                              checkoff_file=input_arguments.output_file,
+                              checkoff_list_file=input_arguments.list_file,
+                              checkoff_header=input_arguments.checkoff_header,
+                              first_name=input_arguments.first_name,
+                              last_name=input_arguments.last_name)
+    else:
+        print(f"Command '{input_arguments.subcommand}' is not recognized")
+        return 1
+
 
 """
 The argument parser setup for the utility.
@@ -73,6 +105,7 @@ if __name__ == '__main__':
                                  type=pathlib.Path,
                                  default='checkoff_lists.csv',
                                  metavar='list_file',
+                                 dest='list_file',
                                  help="A file containing a list or table of checkoffs (default: 'checkoff_lists.csv')")
     parser_checkoff.add_argument('-ch', '--checkoff-header',
                                  type=str,
@@ -111,27 +144,27 @@ if __name__ == '__main__':
     # args = parser.parse_args(['-h'])
     args = parser.parse_args()
     # print(args)
-
-    if args.subcommand == 'sign-in':
-        exit(create_sign_in_sheets(section_list_location=args.section_lists,
-                                   sign_in_file=args.output_file,
-                                   first_name=args.first_name,
-                                   last_name=args.last_name))
-    elif args.subcommand == 'check-pre-labs':
-        exit(check_pre_labs(section_list_location=args.section_lists,
-                            file_suffix=args.file_suffix,
-                            prelab_location=args.prelab_location,
-                            output_location=args.output_location,
-                            assignment_index=7,  # Default position of assignment in eLearning documents
-                            first_name=args.first_name,
-                            last_name=args.last_name))
-    elif args.subcommand == 'make-checkoffs':
-        exit(make_checkoffs(section_list_location=args.section_lists,
-                            checkoff_file=args.output_file,
-                            checkoff_list_file=args.list_file,
-                            checkoff_header=args.checkoff_header,
-                            first_name=args.first_name,
-                            last_name=args.last_name))
-    else:
-        print(f"Command '{args.subcommand}' is not recognized")
-        exit(1)
+    exit(select_function(args))
+    # if args.subcommand == 'sign-in':
+    #     exit(create_sign_in_sheets(section_list_location=args.section_lists,
+    #                                sign_in_file=args.output_file,
+    #                                first_name=args.first_name,
+    #                                last_name=args.last_name))
+    # elif args.subcommand == 'check-pre-labs':
+    #     exit(check_pre_labs(section_list_location=args.section_lists,
+    #                         file_suffix=args.file_suffix,
+    #                         prelab_location=args.prelab_location,
+    #                         output_location=args.output_location,
+    #                         assignment_index=7,  # Default position of assignment in eLearning documents
+    #                         first_name=args.first_name,
+    #                         last_name=args.last_name))
+    # elif args.subcommand == 'make-checkoffs':
+    #     exit(make_checkoffs(section_list_location=args.section_lists,
+    #                         checkoff_file=args.output_file,
+    #                         checkoff_list_file=args.list_file,
+    #                         checkoff_header=args.checkoff_header,
+    #                         first_name=args.first_name,
+    #                         last_name=args.last_name))
+    # else:
+    #     print(f"Command '{args.subcommand}' is not recognized")
+    #     exit(1)
