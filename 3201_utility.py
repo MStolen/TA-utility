@@ -40,6 +40,7 @@ if __name__ == '__main__':
                         help="default: 'Last Name'")
 
     # Parser for creating sign in sheets
+    # For git
     parser_sign_in = subparsers.add_parser('sign-in', formatter_class=CustomHelpFormatter, help="Make sign in sheets.")
     parser_sign_in.add_argument('-sl', '--section-lists',
                                 type=pathlib.Path,
