@@ -73,6 +73,7 @@ if __name__ == '__main__':
                                  type=pathlib.Path,
                                  default='checkoff_lists.csv',
                                  metavar='list_file',
+                                 dest='list_file',
                                  help="A file containing a list or table of checkoffs (default: 'checkoff_lists.csv')")
     parser_checkoff.add_argument('-ch', '--checkoff-header',
                                  type=str,
