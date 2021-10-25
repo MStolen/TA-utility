@@ -1,5 +1,5 @@
 """
-v0.1.0
+v0.1.1
 This script has various utilities to automate TA work for 3201.
 
 This file contains only the argument parsing structure, with the main functions located in "libs/main_functions.py" and
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     parser_checkoff.add_argument('-cl', '--checkoff-list',
                                  type=pathlib.Path,
                                  default='checkoff_lists.csv',
-                                 metavar='list_file',
+                                 dest='list_file',
                                  help="A file containing a list or table of checkoffs (default: 'checkoff_lists.csv')")
     parser_checkoff.add_argument('-ch', '--checkoff-header',
                                  type=str,
@@ -108,7 +108,7 @@ if __name__ == '__main__':
     # args = parser.parse_args(['check-pre-labs'])
     # args = parser.parse_args(['make-checkoffs', '-o', 'Lab3Checkoffs.xlsx'])
     # args = parser.parse_args(['-h'])
-    args = parser.parse_args()
+    args = parser.parse_args(['make-checkoffs', '-ch', 'Lab 7', '-o', 'output/checkoff7.xlsx', '-cl', 'checkoff_lists.csv'])
     # print(args)
 
     if args.subcommand == 'sign-in':
