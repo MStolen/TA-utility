@@ -142,7 +142,7 @@ if __name__ == '__main__':
     # args = parser.parse_args(['check-pre-labs'])
     # args = parser.parse_args(['make-checkoffs', '-o', 'Lab3Checkoffs.xlsx'])
     # args = parser.parse_args(['-h'])
-    args = parser.parse_args()
+    args = parser.parse_args(['make-checkoffs', '-ch', 'Lab 7', '-o', 'output/checkoff7.xlsx', '-cl', 'checkoff_lists.csv'])
     # print(args)
     exit(select_function(args))
     # if args.subcommand == 'sign-in':
