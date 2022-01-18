@@ -1,8 +1,9 @@
-"""Helper functions for 3201_utility.py"""
+"""Helper functions for ta_utility.py"""
 import pathlib
 import warnings
 import pandas as pd
 import math
+import os
 
 
 def fix_column_width(writer: pd.ExcelWriter, sheet_name: str, df: pd.DataFrame, max_last=False) -> None:
@@ -11,7 +12,7 @@ Change The width of all columns in an excel sheet to fit the text contained insi
     :param writer: The excel file writer which has already written the sheet
     :param sheet_name: The name of the sheet to adjust
     :param df: The data frame where sheet was written from
-    :param max_last: Whether or not to maximize last width
+    :param max_last: Whether or not to maximize width of last column
     """
     workbook = writer.book
     worksheet = writer.sheets[sheet_name]  # pull worksheet object
@@ -111,6 +112,11 @@ Make an Excel file with a single sheet for each section in the list with name co
     if output_file.suffix != '.xlsx':
         warnings.warn(
             f"The output extension should be '.xlsx', instead of '{output_file.suffix}'. This may cause an error.")
+
+    # Check if output folder exists and prompt user to create the folder if it does not
+    if not os.path.exists(output_file.parent):
+        print(f"The specified output folder '{output_file.parent}/' does not exist. It has been created")
+        os.makedirs(output_file.parent)
 
     # Write all first and last names to a sheet per section (sections are defined by individual input files)
     writer = pd.ExcelWriter(output_file)

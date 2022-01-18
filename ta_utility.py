@@ -1,5 +1,5 @@
 """
-v0.2.0
+v0.2.1
 This script has various utilities to automate TA work for 3201.
 
 This file contains only the argument parsing structure, with the main functions located in "libs/main_functions.py" and
@@ -103,10 +103,10 @@ if __name__ == '__main__':
                                  help="default: 'checkoffs.xlsx'")
     parser_checkoff.add_argument('-cl', '--checkoff-list',
                                  type=pathlib.Path,
-                                 default='checkoff_lists.csv',
+                                 default='3201_checkoff_lists.csv',
                                  metavar='list_file',
                                  dest='list_file',
-                                 help="A file containing a list or table of checkoffs (default: 'checkoff_lists.csv')")
+                                 help="A file containing a list or table of checkoffs (default: '3201_checkoff_lists.csv')")
     parser_checkoff.add_argument('-ch', '--checkoff-header',
                                  type=str,
                                  default=None,
@@ -139,32 +139,10 @@ if __name__ == '__main__':
                                default='output/',
                                metavar='/location/to/save/output/',
                                help="default: 'output/'")
+
     # args = parser.parse_args(['check-pre-labs'])
+    # args = parser.parse_args(['sign-ins', '-o', './output/fall2021_sign_in.xlsx'])
     # args = parser.parse_args(['make-checkoffs', '-o', 'Lab3Checkoffs.xlsx'])
-    # args = parser.parse_args(['-h'])
-    args = parser.parse_args(['make-checkoffs', '-ch', 'Lab 7', '-o', 'output/checkoff7.xlsx', '-cl', 'checkoff_lists.csv'])
-    # print(args)
+    # args = parser.parse_args(['make-checkoffs', '-ch', 'Lab 12', '-o', 'output/checkoff12.xlsx', '-cl', '3201_checkoff_lists.csv'])
+    args = parser.parse_args()
     exit(select_function(args))
-    # if args.subcommand == 'sign-in':
-    #     exit(create_sign_in_sheets(section_list_location=args.section_lists,
-    #                                sign_in_file=args.output_file,
-    #                                first_name=args.first_name,
-    #                                last_name=args.last_name))
-    # elif args.subcommand == 'check-pre-labs':
-    #     exit(check_pre_labs(section_list_location=args.section_lists,
-    #                         file_suffix=args.file_suffix,
-    #                         prelab_location=args.prelab_location,
-    #                         output_location=args.output_location,
-    #                         assignment_index=7,  # Default position of assignment in eLearning documents
-    #                         first_name=args.first_name,
-    #                         last_name=args.last_name))
-    # elif args.subcommand == 'make-checkoffs':
-    #     exit(make_checkoffs(section_list_location=args.section_lists,
-    #                         checkoff_file=args.output_file,
-    #                         checkoff_list_file=args.list_file,
-    #                         checkoff_header=args.checkoff_header,
-    #                         first_name=args.first_name,
-    #                         last_name=args.last_name))
-    # else:
-    #     print(f"Command '{args.subcommand}' is not recognized")
-    #     exit(1)

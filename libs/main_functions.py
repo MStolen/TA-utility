@@ -24,7 +24,7 @@ Import students names from section and create sign-in sheet
     """
     return make_name_sheets(section_list_location=section_list_location,
                             output_file=sign_in_file,
-                            column_headers=['Time In', 'Time Out', 'Signature', 'Finished'],
+                            column_headers=['Time In', 'Time Out', 'Complete?', 'Signature'],
                             first_name=first_name,
                             last_name=last_name,
                             )
