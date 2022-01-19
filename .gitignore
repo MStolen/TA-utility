@@ -1,6 +1,11 @@
 ### Example user template template
 ### Example user template
 
+# Specific to this project
+output/*
+pre_lab_lists/*
+section_lists/*
+
 # IntelliJ project files
 .idea
 *.iml

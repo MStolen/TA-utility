@@ -5,10 +5,13 @@ EE/CE3201 easier. These documents take the form of Excel files due
 to the tabular nature of class lists, checkoffs, etc.
 
 It is recommended to create a virtual environment to run this application.
-You can install the dependencies using <code>pip install -r requirements.txt</code>
+You can install the dependencies using <code>pip install -r requirements.txt</code>.
+Running the setup script <code>./setup.sh</code>, in a UNIX (or UNIX-like) environment
+will do this for you.
 
 Use the command <code>python -m 3201_utility --help</code>
-for detailed information related to running the program
+for detailed information related to running the program. Alternatively, running the scripts in the [scripts](scripts)
+folder will run the programs in their most basic forms. 
 
 <h2>Expected File Formats</h2>
 The input files to this program are all expected to be either CSV or XLS files.
@@ -28,3 +31,18 @@ This function checks to ensure that students have turned in an assignment. It re
 lists as the sign-in sheets, as well as the download from grade center for the <b>specific assignment</b>. Again, 
 provide the script with the correct path to the assignment files (default is a folder named <code>pre_lab_lists</code>)
 and the output will be one Excel file per assignment file with a single tab for each section with missing assignments.
+
+<h2>Running Basic Scripts</h2>
+The following terminal commands would create the required folders, then run all commands:
+
+<code>./setup.sh</code> Install virtual environment and create default folder structure
+
+<u>Add required files before running the remaining scripts!</u>
+
+<code>./make_sign_ins.sh</code> Create sign-in sheets for each lab section.
+
+<code>./make_checkoffs.sh "Lab 5"</code> Create checkoff sheets for lab 5
+(notice that <code>"Lab 5"</code> is added at the end.
+This argument should match a column header in the checkoff list file).
+
+<code>./check_prelabs.sh</code> Check for missing pre-lab assignments 

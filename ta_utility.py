@@ -1,5 +1,5 @@
 """
-v0.2.1
+v1.0.1
 This script has various utilities to automate TA work for 3201.
 
 This file contains only the argument parsing structure, with the main functions located in "libs/main_functions.py" and
