@@ -59,7 +59,7 @@ if __name__ == '__main__':
                                        title='functions',
                                        required=True,
                                        # metavar='subcommand',
-                                       help="Each function runs a utility for creating useful documents for 3201")
+                                       help="Each function runs a utility for creating useful documents for labs")
     parser.add_argument('-fc', '--first-name-column-header',
                         dest='first_name',
                         type=str,
@@ -82,9 +82,9 @@ if __name__ == '__main__':
                                 )
     parser_sign_in.add_argument('-o', '--output-file',
                                 type=pathlib.Path,
-                                default='sign_ins.xlsx',
+                                default='output/sign_ins.xlsx',
                                 metavar='/path/to/output/file.xlsx',
-                                help="default: 'sing_ins.xlsx'")
+                                help="default: 'output/sign_ins.xlsx'")
 
     # Parser for creating check off sheets
     parser_checkoff = subparsers.add_parser('make-checkoffs',
@@ -98,15 +98,16 @@ if __name__ == '__main__':
                                  )
     parser_checkoff.add_argument('-o', '--output-file',
                                  type=pathlib.Path,
-                                 default='checkoffs.xlsx',
+                                 default='output/checkoffs.xlsx',
                                  metavar='/path/to/output/file.xlsx',
-                                 help="default: 'checkoffs.xlsx'")
+                                 help="default: 'output/checkoffs.xlsx'")
     parser_checkoff.add_argument('-cl', '--checkoff-list',
                                  type=pathlib.Path,
-                                 default='3201_checkoff_lists.csv',
+                                 default='checkoff_lists/3201_checkoff_lists.csv',
                                  metavar='list_file',
                                  dest='list_file',
-                                 help="A file containing a list or table of checkoffs (default: '3201_checkoff_lists.csv')")
+                                 help="A file containing a list or table of checkoffs \
+                                 (default: 'checkoff_lists/3201_checkoff_lists.csv')")
     parser_checkoff.add_argument('-ch', '--checkoff-header',
                                  type=str,
                                  default=None,
@@ -138,11 +139,11 @@ if __name__ == '__main__':
                                type=pathlib.Path,
                                default='output/',
                                metavar='/location/to/save/output/',
-                               help="default: 'output/'")
+                               help="Where to save the output (default: 'output/')")
 
     # args = parser.parse_args(['check-pre-labs'])
     # args = parser.parse_args(['sign-ins', '-o', './output/fall2021_sign_in.xlsx'])
     # args = parser.parse_args(['make-checkoffs', '-o', 'Lab3Checkoffs.xlsx'])
-    # args = parser.parse_args(['make-checkoffs', '-ch', 'Lab 12', '-o', 'output/checkoff12.xlsx', '-cl', '3201_checkoff_lists.csv'])
+    # args = parser.parse_args(['make-checkoffs', '-ch', 'Lab 12', '-o', 'output/checkoff12.xlsx'])
     args = parser.parse_args()
     exit(select_function(args))
